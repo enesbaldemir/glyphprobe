@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GlyphProbe — local demo</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 15px/1.5 system-ui, sans-serif; max-width: 680px; margin: 40px auto; padding: 0 16px; }
+    h1 { font-size: 20px; }
+    .card { border: 1px solid #8884; border-radius: 10px; padding: 16px; margin: 16px 0; }
+    label { display: block; margin: 8px 0 4px; font-weight: 600; }
+    input, select { width: 100%; padding: 8px; font-size: 15px; box-sizing: border-box; }
+    button { margin-top: 12px; padding: 8px 16px; font-size: 15px; cursor: pointer; }
+    .out { margin-top: 14px; padding: 12px; border: 1px dashed #8886; border-radius: 8px; min-height: 24px; white-space: pre-wrap; word-break: break-all; }
+    .muted { color: #8889; font-size: 13px; }
+    code { background: #8882; padding: 1px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>GlyphProbe — local demo</h1>
+  <p class="muted">
+    A safe target that runs only in your browser. Pick how this "server" treats
+    the input, insert probes into the field, click <b>Reflect</b>, then open the
+    extension popup and click <b>Scan page</b>. The result should match the mode
+    you picked.
+  </p>
+
+  <div class="card">
+    <label for="mode">Server behaviour</label>
+    <select id="mode">
+      <option value="none">No transform (reflect as-is)</option>
+      <option value="nfkc">NFKC normalization</option>
+      <option value="nfd">NFD normalization</option>
+      <option value="upper">Uppercasing</option>
+      <option value="lower">Lowercasing</option>
+      <option value="bestfit">Windows best-fit (ANSI)</option>
+    </select>
+
+    <label for="field">Input field (right-click → Insert Unicode probes)</label>
+    <input id="field" type="text" placeholder="Insert probes here, then Reflect" />
+
+    <button id="go">Reflect</button>
+
+    <label style="margin-top:16px">Server response</label>
+    <div id="out" class="out"></div>
+  </div>
+
+  <p class="muted">
+    Tip: start with <code>No transform</code> to confirm the probes are detected
+    as unchanged, then switch to <code>NFKC</code> or <code>Windows best-fit</code>
+    and reflect again to watch the detection light up.
+  </p>
+
+  <script>
+// Local demo logic. Transforms the field value the way the selected "server"
+// would, so you can watch the extension detect each transform. No network.
+const BESTFIT = {"100":"A","101":"a","102":"A","103":"a","104":"A","105":"a","106":"C","107":"c","108":"C","109":"c","111":"d","112":"E","113":"e","114":"E","115":"e","116":"E","117":"e","118":"E","119":"e","120":"G","121":"g","122":"G","123":"g","124":"H","125":"h","126":"H","127":"h","128":"I","129":"i","130":"I","131":"i","134":"J","135":"j","136":"K","137":"k","139":"L","141":"L","142":"l","143":"N","144":"n","145":"N","146":"n","147":"N","148":"n","150":"O","151":"o","154":"R","155":"r","156":"R","157":"r","158":"R","159":"r","162":"T","163":"t","164":"T","165":"t","166":"T","167":"t","168":"U","169":"u","170":"U","171":"u","172":"U","173":"u","174":"W","175":"w","176":"Y","177":"y","179":"Z","180":"b","197":"I","261":"g","300":"`","302":"^","303":"~","331":"_","332":"_","393":"G","398":"T","589":":","2000":" ","2001":" ","2002":" ","2003":" ","2004":" ","2005":" ","2006":" ","2010":"-","2011":"-","2017":"=","2032":"'","2035":"`","2044":"/","2074":"4","2075":"5","2076":"6","2077":"7","2078":"8","2080":"0","2081":"1","2082":"2","2083":"3","2084":"4","2085":"5","2086":"6","2087":"7","2088":"8","2089":"9","2102":"C","2107":"E","2110":"I","2111":"I","2112":"L","2113":"l","2115":"N","2118":"P","2119":"P","2124":"Z","2128":"Z","2130":"E","2131":"F","2133":"M","2134":"o","2212":"-","2215":"/","2216":"\\","2217":"*","2223":"|","2229":"n","2236":":","2261":"=","2264":"=","2265":"=","2303":"^","2320":"(","2321":")","2329":"<","2500":"-","2510":"+","2514":"+","2518":"+","2534":"-","2550":"-","2552":"+","2553":"+","2554":"+","2555":"+","2556":"+","2557":"+","2558":"+","2559":"+","2564":"-","2565":"-","2566":"-","2567":"-","2568":"-","2569":"-","2584":"_","2758":"|","3000":" ","3008":"<","3009":">","10a":"C","10b":"c","10c":"C","10d":"c","10e":"D","10f":"d","11a":"E","11b":"e","11c":"G","11d":"g","11e":"G","11f":"g","12a":"I","12b":"i","12c":"I","12d":"i","12e":"I","12f":"i","13a":"l","13b":"L","13c":"l","13d":"L","13e":"l","14c":"O","14d":"o","14e":"O","14f":"o","15a":"S","15b":"s","15c":"S","15d":"s","15e":"S","15f":"s","16a":"U","16b":"u","16c":"U","16d":"u","16e":"U","16f":"u","17a":"z","17b":"Z","17c":"z","19a":"l","19f":"O","1a0":"O","1a1":"o","1ab":"t","1ae":"T","1af":"U","1b0":"u","1b6":"z","1c0":"|","1c3":"!","1cd":"A","1ce":"a","1cf":"I","1d0":"i","1d1":"O","1d2":"o","1d3":"U","1d4":"u","1d5":"U","1d6":"u","1d7":"U","1d8":"u","1d9":"U","1da":"u","1db":"U","1dc":"u","1de":"A","1df":"a","1e4":"G","1e5":"g","1e6":"G","1e7":"g","1e8":"K","1e9":"k","1ea":"O","1eb":"o","1ec":"O","1ed":"o","1f0":"j","2b9":"'","2ba":"\"","2bc":"'","2c4":"^","2c8":"'","2cb":"`","2cd":"_","30e":"\"","37e":";","3a3":"S","3a6":"F","3a9":"O","3b1":"a","3b4":"d","3b5":"e","3c0":"p","3c3":"s","3c4":"t","3c6":"f","4bb":"h","66a":"%","207f":"n","20a7":"P","210a":"g","210b":"H","210c":"H","210d":"H","210e":"h","211a":"Q","211b":"R","211c":"R","211d":"R","212a":"K","212c":"B","212d":"C","212e":"e","212f":"e","221a":"v","221e":"8","223c":"~","232a":">","250c":"+","251c":"+","252c":"-","253c":"+","255a":"+","255b":"+","255c":"+","255d":"+","256a":"+","256b":"+","256c":"+","301a":"[","301b":"]","ff01":"!","ff02":"\"","ff03":"#","ff04":"$","ff05":"%","ff06":"&","ff07":"'","ff08":"(","ff09":")","ff0a":"*","ff0b":"+","ff0c":",","ff0d":"-","ff0e":".","ff0f":"/","ff10":"0","ff11":"1","ff12":"2","ff13":"3","ff14":"4","ff15":"5","ff16":"6","ff17":"7","ff18":"8","ff19":"9","ff1a":":","ff1b":";","ff1c":"<","ff1d":"=","ff1e":">","ff1f":"?","ff20":"@","ff21":"A","ff22":"B","ff23":"C","ff24":"D","ff25":"E","ff26":"F","ff27":"G","ff28":"H","ff29":"I","ff2a":"J","ff2b":"K","ff2c":"L","ff2d":"M","ff2e":"N","ff2f":"O","ff30":"P","ff31":"Q","ff32":"R","ff33":"S","ff34":"T","ff35":"U","ff36":"V","ff37":"W","ff38":"X","ff39":"Y","ff3a":"Z","ff3b":"[","ff3c":"\\","ff3d":"]","ff3e":"^","ff3f":"_","ff40":"`","ff41":"a","ff42":"b","ff43":"c","ff44":"d","ff45":"e","ff46":"f","ff47":"g","ff48":"h","ff49":"i","ff4a":"j","ff4b":"k","ff4c":"l","ff4d":"m","ff4e":"n","ff4f":"o","ff50":"p","ff51":"q","ff52":"r","ff53":"s","ff54":"t","ff55":"u","ff56":"v","ff57":"w","ff58":"x","ff59":"y","ff5a":"z","ff5b":"{","ff5c":"|","ff5d":"}","ff5e":"~"};
+function bestfit(s){let o="";for(const c of s){const k=c.codePointAt(0).toString(16);o+=(BESTFIT[k]!==undefined?BESTFIT[k]:c);}return o;}
+function transform(mode, v){
+  switch(mode){
+    case "nfkc": return v.normalize("NFKC");
+    case "nfd": return v.normalize("NFD");
+    case "upper": return v.toUpperCase();
+    case "lower": return v.toLowerCase();
+    case "bestfit": return bestfit(v);
+    default: return v;
+  }
+}
+document.getElementById("go").addEventListener("click", function(){
+  const mode = document.getElementById("mode").value;
+  const v = document.getElementById("field").value;
+  document.getElementById("out").textContent = transform(mode, v);
+});
+</script>
+</body>
+</html>

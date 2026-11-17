@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GlyphProbe</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1>GlyphProbe</h1>
+    <p class="sub">Insert probes into a field, submit the form, then scan the response.</p>
+  </header>
+
+  <section class="controls">
+    <fieldset>
+      <legend>Probe set</legend>
+      <label><input type="checkbox" value="injection" checked /> Injection (fullwidth <code>&lt; &gt; ' " / .</code>)</label>
+      <label><input type="checkbox" value="discriminator" checked /> Discriminators (tell NFKC from best-fit)</label>
+      <label><input type="checkbox" value="case" checked /> Case mapping</label>
+      <label><input type="checkbox" value="length" checked /> Length growth</label>
+    </fieldset>
+    <div class="buttons">
+      <button id="insert" type="button">Insert into focused field</button>
+      <button id="scan" type="button" class="primary">Scan page</button>
+    </div>
+    <p id="status" class="status" role="status"></p>
+  </section>
+
+  <section id="summary" class="summary" hidden></section>
+  <section id="results" class="results"></section>
+
+  <footer>
+    <p>A transformation is not automatically a finding. See
+      <a id="wstg" href="#" target="_blank" rel="noopener">WSTG-INJT-25</a>.
+      Use only on applications you are authorized to test.</p>
+  </footer>
+
+  <script src="data/bestfit.js"></script>
+  <script src="data/probes.js"></script>
+  <script src="lib/transforms.js"></script>
+  <script src="lib/detect.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

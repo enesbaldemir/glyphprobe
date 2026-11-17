@@ -1,0 +1,53 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1b1f24;
+  --muted: #5a6572;
+  --border: #d7dce2;
+  --card: #f5f7f9;
+  --accent: #2b6cb0;
+  --ok: #2f855a;
+  --warn: #b7791f;
+  --change: #c05621;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15181d; --fg: #e6e9ee; --muted: #9aa5b1; --border: #2c323b;
+    --card: #1c2027; --accent: #63b3ed; --ok: #68d391; --warn: #f6ad55; --change: #fba36b;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  width: 420px; margin: 0; padding: 14px 16px 10px;
+  font: 13px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg); color: var(--fg);
+}
+h1 { font-size: 15px; margin: 0; }
+.sub { margin: 2px 0 10px; color: var(--muted); font-size: 12px; }
+fieldset { border: 1px solid var(--border); border-radius: 8px; margin: 0 0 10px; padding: 8px 10px; }
+legend { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding: 0 4px; }
+fieldset label { display: block; margin: 3px 0; }
+code { font-family: var(--mono); font-size: 12px; }
+.buttons { display: flex; gap: 8px; }
+button {
+  flex: 1; padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--card); color: var(--fg); font: inherit; cursor: pointer;
+}
+button.primary { background: var(--accent); color: #fff; border-color: transparent; }
+button:active { transform: translateY(1px); }
+.status { min-height: 16px; margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.summary { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.chip { padding: 3px 9px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); background: var(--card); }
+.chip.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.results table { width: 100%; border-collapse: collapse; }
+.results th, .results td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.results th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.results td.char, .results td.obs { font-family: var(--mono); }
+.tag { font-size: 11px; }
+.s-transformed { color: var(--change); }
+.s-unchanged { color: var(--muted); }
+.s-changed { color: var(--warn); }
+.s-not-observed { color: var(--muted); font-style: italic; }
+.grew { color: var(--warn); }
+footer { margin-top: 10px; color: var(--muted); font-size: 11px; }
+footer a { color: var(--accent); }

@@ -1,0 +1,8 @@
+Unicode Probe includes data derived from the Unicode Character Database:
+
+  https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WindowsBestFit/bestfit1252.txt
+
+The derived mapping is in src/data/bestfit.js. Unicode data files are
+distributed under the Unicode License (https://www.unicode.org/license.txt).
+
+  Copyright (c) Unicode, Inc. All rights reserved.
