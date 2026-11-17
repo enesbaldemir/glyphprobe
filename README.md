@@ -75,7 +75,7 @@ Works in Chrome, Edge, Brave and other Chromium browsers.
 
 ## Use
 
-1. Right-click a text field and choose **Insert Unicode probes** (or click into
+1. Right-click a text field and choose **Insert GlyphProbe probes** (or click into
    the field and use **Insert into focused field** in the popup).
 2. Submit the form or trigger the request as usual.
 3. Open the popup and click **Scan page**.
@@ -152,7 +152,7 @@ mekanizmanın çalıştığını söyler. Ayrıca uzunluk artışını da (`ß` 
    klasörünü seç.
 3. `demo/` klasöründe `python -m http.server 8000` çalıştır, <http://localhost:8000>
    adresini aç ve demoyu dene.
-4. Bir alana sağ tıkla → **Insert Unicode probes** → formu gönder → popup'tan
+4. Bir alana sağ tıkla → **Insert GlyphProbe probes** → formu gönder → popup'tan
    **Scan page**.
 
 Bir dönüşümün görülmesi tek başına bir zafiyet değildir; önemli olan bunun
