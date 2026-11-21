@@ -25,7 +25,7 @@ canonicalizing, [CWE-180](https://cwe.mitre.org/data/definitions/180.html), and 
 turns a filter bypass into XSS, SQL injection or path traversal.
 
 GlyphProbe supports the testing in OWASP WSTG
-[Testing for Unicode Normalization and Case Mapping](https://owasp.org/www-project-web-security-testing-guide/latest/) (WSTG-INJT-25).
+[Unicode Normalization and Case Mapping](https://github.com/OWASP/wstg/blob/master/document/11-Injection/24-Unicode_Normalization_and_Case_Mapping.md) (WSTG-INJT-24).
 
 ## What makes it different
 
@@ -131,7 +131,7 @@ sonra çalışan kod bunları `<`, `'`, `../` olarak alır. Bu, doğrulamadan ö
 kanonikleştirmedir ([CWE-180](https://cwe.mitre.org/data/definitions/180.html)) ve
 bir filtre atlatmayı XSS, SQL injection ya da path traversal'a çevirir.
 
-OWASP WSTG **Testing for Unicode Normalization and Case Mapping** (WSTG-INJT-25)
+OWASP WSTG [Unicode Normalization and Case Mapping](https://github.com/OWASP/wstg/blob/master/document/11-Injection/24-Unicode_Normalization_and_Case_Mapping.md) (WSTG-INJT-24)
 bölümündeki testleri destekler.
 
 ### Farkı ne?

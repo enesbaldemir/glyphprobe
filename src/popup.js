@@ -1,7 +1,7 @@
 // Popup: drive inject and scan on the active tab, and render the report.
 (function () {
   const U = globalThis.UPROBE;
-  const WSTG = 'https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/';
+  const WSTG = 'https://github.com/OWASP/wstg/blob/master/document/11-Injection/24-Unicode_Normalization_and_Case_Mapping.md';
 
   const statusEl = document.getElementById('status');
   const summaryEl = document.getElementById('summary');
